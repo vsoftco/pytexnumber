@@ -1,4 +1,4 @@
-Usage: 
+ - Usage: 
 
 python3 py3texnumber.py in.tex out.tex pattern replacement 
   - for the Python 3 version.
@@ -6,7 +6,7 @@ python3 py3texnumber.py in.tex out.tex pattern replacement
 python py2texnumber.py in.tex out.tex pattern replacement 
   - for the Python 2 version.
 
-Description: replaces all labels in in.tex that match 
+- Description: replaces all labels in in.tex that match 
 a given input pattern, such as \label{pattern...} 
 and all corresponding references (\ref, \eqref, \pageref) 
 with renumbered ones replacement+idx, where idx counts 
@@ -15,7 +15,7 @@ i.e. equals 1 for the first \label that matches the input pattern,
 2 for the second etc. The in.tex is left unchanged and the 
 modifications are written to out.tex.
 
-Example: consider a latex file source.tex having three labels, named, 
+- Example: consider a latex file source.tex having three labels, named, 
 in order of appearance, \label{eqn5}, \label{eqn_important} 
 and lastly \label{entropy}. Then the command 
 
