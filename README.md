@@ -26,4 +26,4 @@ to eqn5 will automatically become references to Eqn1) and replace
 \label{eqn_important} by \label{Eqn2} (again together with 
 the corresponding references). The \label{entropy} remains unchanged 
 since it does not match the input pattern \label{eqn...}. 
-The results are saved to the file out.tex.
+The changes are saved to the file out.tex.
