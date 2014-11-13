@@ -1,10 +1,12 @@
  - Usage: 
+    
+    Python 3 version:
 
         python3 py3texnumber.py in.tex out.tex pattern replacement 
-    for the Python 3 version.
-
+    
+    Python 2 version:
+    
         python py2texnumber.py in.tex out.tex pattern replacement 
-    for the Python 2 version.
 
 - Description: replaces all labels in in.tex that match 
 a given input pattern, such as \label{pattern...} 
