@@ -1,10 +1,10 @@
  - Usage: 
 
-python3 py3texnumber.py in.tex out.tex pattern replacement 
-  -- for the Python 3 version.
+        python3 py3texnumber.py in.tex out.tex pattern replacement 
+    for the Python 3 version.
 
-python py2texnumber.py in.tex out.tex pattern replacement 
-  -- for the Python 2 version.
+        python py2texnumber.py in.tex out.tex pattern replacement 
+    for the Python 2 version.
 
 - Description: replaces all labels in in.tex that match 
 a given input pattern, such as \label{pattern...} 
@@ -19,7 +19,7 @@ modifications are written to out.tex.
 in order of appearance, \label{eqn5}, \label{eqn_important} 
 and lastly \label{entropy}. Then the command 
 
-python3 py3texnumber.py in.tex out.tex eqn Eqn 
+        python3 py3texnumber.py in.tex out.tex eqn Eqn 
 
 will replace \label{eqn5} by \label{Eqn1} (and also all references 
 to eqn5 will automatically become references to Eqn1) and replace 
