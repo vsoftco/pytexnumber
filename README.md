@@ -1,3 +1,5 @@
+## Python console program for renumbering latex equations
+
  - Usage: 
     
     Python 3 version:
