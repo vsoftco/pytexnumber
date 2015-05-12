@@ -1,4 +1,4 @@
-### Python console program for renumbering latex equations
+### Python console program for renumbering latex references
 
  - Usage: 
     
