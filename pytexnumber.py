@@ -33,6 +33,7 @@ import re
 import sys
 
 
+# builds the labels dictionary
 def build_labels(input_file, pattern_in, ignore_comments):
     count = 0  # number of distinct labels in the dictionary
     dictionary = {}  # this is the label dictionary
@@ -56,6 +57,7 @@ def build_labels(input_file, pattern_in, ignore_comments):
     return [dictionary, warnings]
 
 
+# replaces all matching references in the current line (up to comments if comments are ignored)
 def replace_refs_in_line(keywords, pattern_in, pattern_out,
                          dictionary, line, line_idx, ignore_comments):
     warnings = []  # undefined reference(s) warning(s) in (the current line)
@@ -88,7 +90,7 @@ def replace_refs_in_line(keywords, pattern_in, pattern_out,
     return [line_no_comments + comment, warnings]
 
 
-# Main program
+# main program
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='Renumbers LaTeX equations.'
@@ -111,14 +113,14 @@ if __name__ == "__main__":
     keywords = ['label', 'eqref', 'ref', 'pageref']  # modify as needed
 
     try:
+        # process the stream
         with sys.stdin as f_in, sys.stdout as f_out:
             # create the label dictionary
             [label_dictionary, label_warnings] = build_labels(f_in, pattern, ignore_comments)
-            # search and replace
+            # replace all matching references line by line
             modified_lines = []  # list with the lines that are modified
             distinct_label_modifications = 0  # count modified \label{pattern...}
             reference_warnings = []  # reference warnings
-            # line by line...
             for line_index, current_line in enumerate(f_in, start=1):
                 [modified_line, warnings] = \
                     replace_refs_in_line(keywords, pattern, replacement, label_dictionary,
@@ -129,34 +131,36 @@ if __name__ == "__main__":
                     reference_warnings += warnings
                 f_out.write(modified_line)
 
-            if args.log is not None:
-                try:
-                    with open(args.log, 'w') as logfile:
-                        original_stdout = sys.stdout  # Save a reference to the original standard output
-                        sys.stdout = logfile
+        # display warnings
+        original_stdout = sys.stdout
+        sys.stdout = sys.stderr
+        if label_warnings or reference_warnings:
+            if reference_warnings:
+                print('PARSING WARNING: Undefined references')
+                for [item, row, col] in reference_warnings:
+                    print(item + ', ' + str(row) + ':' + str(col))
+            if label_warnings:
+                print('PARSING WARNING: Duplicate labels')
+                for [item, row, col] in label_warnings:
+                    print(item + ', ' + str(row) + ':' + str(col))
+        sys.stdout = original_stdout
 
-                        # replacements
-                        for item in sorted(label_dictionary, key=label_dictionary.get):
-                            item_no_accolades = item
-                            remove = ['{', '}']
-                            for c in remove:
-                                item_no_accolades = item_no_accolades.replace(c, '')
-                            print(item_no_accolades + ' -> ' + replacement + str(label_dictionary[item]))
+        # write to log file (if any)
+        if args.log is not None:
+            try:
+                with open(args.log, 'w') as logfile:
+                    original_stdout = sys.stdout  # Save a reference to the original standard output
+                    sys.stdout = logfile
 
-                        # display warnings
-                        sys.stdout = sys.stderr
-                        if label_warnings or reference_warnings:
-                            if reference_warnings:
-                                print('PARSING WARNING: Undefined references')
-                                for [item, row, col] in reference_warnings:
-                                    print(item + ', ' + str(row) + ':' + str(col))
-                            if label_warnings:
-                                print('PARSING WARNING: Duplicate labels')
-                                for [item, row, col] in label_warnings:
-                                    print(item + ', ' + str(row) + ':' + str(col))
+                    # replacements
+                    for item in sorted(label_dictionary, key=label_dictionary.get):
+                        item_no_accolades = item
+                        remove = ['{', '}']
+                        for c in remove:
+                            item_no_accolades = item_no_accolades.replace(c, '')
+                        print(item_no_accolades + ' -> ' + replacement + str(label_dictionary[item]))
+            except IOError as err:
+                print(str(err))
 
-                        sys.stdout = original_stdout
-                except IOError as err:
-                    print(str(err))
     except IOError as err:
         print(str(err))
