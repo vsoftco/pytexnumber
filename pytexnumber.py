@@ -6,7 +6,7 @@
 #
 # Type python3 pytexnumber.py --help for help
 
-# Copyright (c) 2013 - 2021 Vlad Gheorghiu. All rights reserved.
+# Copyright (c) 2013 - 2023 Vlad Gheorghiu. All rights reserved.
 #
 # MIT License
 #
