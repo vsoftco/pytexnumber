@@ -93,7 +93,7 @@ def replace_refs_in_line(keywords, pattern_in, pattern_out,
 # main program
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description='Renumbers LaTeX equations.'
+        description='Renumbers LaTeX equations. '
                     'The program reads from the standard input and writes to the standard output.')
     parser.add_argument('pattern', nargs='?', help='input pattern, e.g., "eqn"')
     parser.add_argument('replacement', nargs='?', help='replacement pattern, e.g., "Eqn"')
